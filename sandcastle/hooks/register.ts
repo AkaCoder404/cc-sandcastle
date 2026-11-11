@@ -19,10 +19,20 @@ export const register: Register = on => {
     return next(e)
   })
 
-  // /sandcastle [on|off|status]  — no arg toggles
+  // /sandcastle [init|on|off|status]  — no arg toggles
   on('command.run', { command: 'sandcastle' }, async ($, e) => {
     const arg = e.args.trim().toLowerCase()
     const current = await read($, containerAtom)
+
+    // ── init: hand off to the guided setup skill ────────────────────────────
+    if (arg === 'init' || arg.startsWith('init ')) {
+      return {
+        text: 'Starting sandcastle init — the guided setup runs below.',
+        context: [
+          'The user invoked /sandcastle init. Invoke the Skill tool now with skill "sandcastle:init" and follow it exactly: it detects the project, proposes a plan, writes .sandcastle/Dockerfile, builds sandcastle:<dirname>, and smoke tests the image. Confirm the plan with the user before writing any files.',
+        ],
+      }
+    }
 
     // ── status ──────────────────────────────────────────────────────────────
     if (arg === 'status') {
@@ -74,7 +84,7 @@ export const register: Register = on => {
     )
     if (imgCheck.exitCode !== 0) {
       return {
-        text: `Image \`${imageName}\` not found. Run \`npm run sandbox:build\` in \`${repoRoot}\` first.\n\nOr specify the image directly: \`/sandcastle on --image sandcastle:dtms-ai\``,
+        text: `Image \`${imageName}\` not found. Run \`/sandcastle init\` to set it up (guided: generates .sandcastle/Dockerfile, builds, smoke tests), or pass \`--image <name>\` to use an existing image.`,
       }
     }
 
