@@ -1,0 +1,12 @@
+{
+  "name": "cc-sandcastle",
+  "owner": { "name": "AkaCoder404" },
+  "description": "Local Claude Code plugins: resource-limited Docker sandboxes for Bash commands",
+  "plugins": [
+    {
+      "name": "sandcastle",
+      "source": "./sandcastle",
+      "description": "Toggle a resource-limited Docker sandbox for Bash commands via /sandcastle on|off"
+    }
+  ]
+}
