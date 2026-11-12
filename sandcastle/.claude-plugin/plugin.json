@@ -1,6 +1,6 @@
 {
   "name": "sandcastle",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": { "name": "AkaCoder404" },
   "license": "MIT",
   "description": "Toggle a resource-limited Docker container for Bash commands via /sandcastle on|off",
